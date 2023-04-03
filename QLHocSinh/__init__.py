@@ -13,3 +13,5 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 
 cloudinary.config(cloud_name='dkcq9dgui', api_key='586758563261442', api_secret='VUEoTXbDRMiDSc9PXRcu_dqEoe0')
+
+#Kết nối với mySQL

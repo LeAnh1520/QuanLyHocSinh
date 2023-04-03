@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from datetime import datetime
 from enum import Enum as UserEnum
 
+#Thiết kế bảng trong mySQL
 class UserRole(UserEnum):
     QTV = 0
     NV = 1

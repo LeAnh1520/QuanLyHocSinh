@@ -35,31 +35,8 @@ def my_logout():
     logout_user()
     return redirect("/login")
 
-@app.route('/register')
-def my_register():
-    return render_template('register.html')
-
-@app.route("/register", methods=['post'])
-def my_register_process():
-    data = request.form
-    password = data['password']
-    confirm = data['confirm']
-
-    if password.__eq__(confirm):
-        name = data['name']
-        username = data['username']
-        res = cloudinary.uploader.upload(request.files['avatar'])
-
-        try:
-            dao.add_user(name=name, username=username, password=password)
-            return redirect("/login")
-        except Exception as ex:
-            msg = str(ex)
-    else:
-        msg = 'Password does not match!!!'
-
-    return render_template('register.html', msg=msg)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -22,15 +22,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Trang chủ</a>
                 </li>
+
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="/">
                         <img src="{{ current_user.avatar }}" width="40" class="rounded-circle" />
                         {{ current_user.name }}
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-secondary" href="/cart">&#128085; Giỏ hàng</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Đăng xuất</a>
@@ -44,10 +42,10 @@
                 </li>
                 {% endif %}
             </ul>
-<!--             <form class="d-flex" action="/">-->
-<!--                <input class="form-control me-2" name="kw" type="text" placeholder="Nhập tên...">-->
-<!--                <button class="btn btn-primary" type="submit">Tìm</button>-->
-<!--             </form>-->
+             <form class="d-flex" action="/">
+                <input class="form-control me-2" name="kw" type="text" placeholder="Nhập tên...">
+                <button class="btn btn-primary" type="submit">Tìm</button>
+             </form>
         </div>
     </div>
 </nav>
