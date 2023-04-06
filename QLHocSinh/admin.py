@@ -1,10 +1,11 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from QLHocSinh import app, db, dao
-from QLHocSinh.models import GiaoVien, NhanVien, QuanTriVien, MonHoc, HocSinh, HocKy, UserRole, User, Lop
-from flask_login import logout_user, current_user
 from flask_admin import BaseView, expose
 from flask import redirect, request
+from QLHocSinh.models import GiaoVien, NhanVien, QuanTriVien, MonHoc, Lop, HocSinh, HocKy, Diem, Diem15, Diem45, UserRole, User
+from flask_login import logout_user, current_user
+from sqlalchemy import inspect
 
 #Vào trang admin
 
@@ -134,18 +135,59 @@ class LogoutView(AuthenticatedBaseView):
         logout_user()
         return redirect('/admin')
 
+class DiemView(ModelView):
+    column_display_pk = True
+
+class HocSinhView(ModelView):
+    # def check_can_create(self):
+    #     can_create = True
+    #     if can_create:
+    #         print("khai dep trai")
+    #         return True
+    #     else:
+    #         print("flash")
+    #         flash(gettext("You can't create other user"), 'error')
+    #         return False
+
+    # def render(self):
+    #     if not self.can_create:
+    #         flash(gettext("You can't create other user"), 'error')
+    #
+    #     return super(HocSinhView, self).render()
+
+    # can_create = property(check_can_create)
+    column_display_pk = True
+    column_hide_backrefs = False
+    column_list = [c_attr.key for c_attr in inspect(HocSinh).mapper.column_attrs]
+    column_labels = {
+        'ten': 'Tên',
+        'hoten': 'Họ tên',
+        'ngaysinh': 'Ngày sinh',
+        'gioitinh': 'Giới tính',
+        'diachi': 'Địa chỉ',
+        'sdt': 'Số điện thoại',
+        'ngaybatdau': 'Ngày bắt đầu',
+        'lop_id': 'Mã lớp',
+        'id': 'Mã sinh viên',
+        'lop': 'Lớp'
+    }
+
 admin = Admin(app, name='QUẢN TRỊ TRƯỜNG THPT', template_mode='bootstrap4')
 admin.add_view(UserView(User, db.session, name='Tài khoản'))
 admin.add_view(PersonView(GiaoVien, db.session, name='Giáo viên', category= "Cá nhân"))
 admin.add_view(PersonView(NhanVien, db.session, name='Nhân viên', category= "Cá nhân"))
 admin.add_view(PersonView(QuanTriVien, db.session, name='Quản trị viên', category= "Cá nhân"))
-admin.add_view(HocSinhView(HocSinh, db.session, name="Học sinh"))
+admin.add_view(HocSinhView(HocSinh, db.session, name='Tiếp nhận sinh viên'))
 admin.add_view(MonHocView(MonHoc, db.session, name="Môn học"))
 admin.add_view(LopView(Lop, db.session, name='Danh sách lớp học', category= "Lớp học"))
 admin.add_view(LapDanhSachLop(name='Lập danh sách lớp', category= "Lớp học"))
 admin.add_view(SapXepLop(name='Điều chỉnh lớp học', category= "Lớp học"))
-
-
+admin.add_view(DiemView(Diem, db.session, name='Quản lý điểm'))
 admin.add_view(StatsView(name='Thống kê'))
 admin.add_view(LogoutView(name='Logout'))
+
+# Tiep nhan sinh vien
+# Danh sach lop
+# Quan ly diem
+# Thong ke bao cao
 

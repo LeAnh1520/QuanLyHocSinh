@@ -7,15 +7,18 @@ from enum import Enum as UserEnum
 
 #Thiết kế bảng trong mySQL
 class UserRole(UserEnum):
+    __tablename__ = 'user_role'
     QTV = 0
     NV = 1
     GV = 2
 
 class BaseModel(db.Model):
     __abstract__ = True
-    id = Column(Integer,primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
 class User(BaseModel, UserMixin):
+    __tablename__ = 'name'
+
     name = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
     password = Column(String(50), nullable=False)
@@ -46,12 +49,12 @@ class Lop(BaseModel):
     ten = Column(String(10), nullable=False)
     siso = Column(Integer, default=0)
     hocsinh = relationship('HocSinh', backref='lop', lazy=False)
-
+    # hocsinh = relationship('HocSinh', backref='lop', lazy=False)
     # teachers = relationship('Teacher', secondary='course', lazy='subquery',
     #                         backref=backref('classroom', lazy=True))
 
     def __str__(self):
-        return self.grade + self.name
+        return self.lop + self.ten
 
 class HocSinh(BaseModel):
     __table_args__ = (
@@ -68,6 +71,7 @@ class HocSinh(BaseModel):
     email = Column(String(50))
     ngaybatdau = Column(Date, default=datetime.now())
     lop_id = Column(Integer, ForeignKey(Lop.id))
+    lop = relationship('Lop', backref=backref('hocsinh', lazy=True))
     # lop = relationship('Lop', backref='hocsinh', lazy=False)
 
 class GiaoVien(HoSo):
