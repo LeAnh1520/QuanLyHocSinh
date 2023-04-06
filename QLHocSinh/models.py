@@ -42,10 +42,11 @@ class HoSo(BaseModel):
         return self.ten + ' ' + self.hoten
 
 class Lop(BaseModel):
-    lop = Column(String(5), nullable=False)
+    khoi = Column(String(5), nullable=False)
     ten = Column(String(10), nullable=False)
     siso = Column(Integer, default=0)
     hocsinh = relationship('HocSinh', backref='lop', lazy=False)
+
     # teachers = relationship('Teacher', secondary='course', lazy='subquery',
     #                         backref=backref('classroom', lazy=True))
 
@@ -57,7 +58,7 @@ class HocSinh(BaseModel):
         CheckConstraint('(year(ngaybatdau) - year(ngaysinh)) > 14', name='chk_age1'),
         CheckConstraint('(year(ngaybatdau) - year(ngaysinh)) < 21', name='chk_age2')
     )
-
+    #2008 - 2003
     ten = Column(String(20), nullable=False)
     hoten = Column(String(20), nullable=False)
     ngaysinh = Column(Date, nullable=False)
@@ -67,6 +68,7 @@ class HocSinh(BaseModel):
     email = Column(String(50))
     ngaybatdau = Column(Date, default=datetime.now())
     lop_id = Column(Integer, ForeignKey(Lop.id))
+    # lop = relationship('Lop', backref='hocsinh', lazy=False)
 
 class GiaoVien(HoSo):
     user_id = Column(Integer, ForeignKey(User.id), unique=True)

@@ -2,17 +2,22 @@
 
 {% block content %}
 <div class="form-login" style="margin:50px auto; width:500px; height:450px;">
-  <h1 class="text-center heading" style="margin-top:30px;margin-bottom:30px">ĐĂNG NHẬP</h1>
-  <form method="post">
-    <div class="mb-3 mt-3">
-      <label for="username" class="form-label">Tên đăng nhập:</label>
-      <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username">
+    <h1 class="text-center heading" style="margin-top:30px;margin-bottom:30px">ĐĂNG NHẬP</h1>
+    {% if error_msg %}
+    <div class="alert alert-danger">
+        {{ error_msg }}
     </div>
-    <div class="mb-3">
-      <label for="pwd" class="form-label">Mật khẩu:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Mật khẩu" name="password">
-    </div>
-    <button type="submit" class="btn btn-primary">Đăng nhập</button>
-  </form>
+    {% endif %}
+    <form method="post">
+        <div class="mb-3 mt-3">
+            <label for="username" class="form-label">Tên đăng nhập:</label>
+            <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="pwd" class="form-label">Mật khẩu:</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Mật khẩu" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    </form>
 </div>
 {% endblock %}
