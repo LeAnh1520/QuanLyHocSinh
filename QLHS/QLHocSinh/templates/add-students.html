@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %} Thêm học sinh {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center heading" style="margin:50px auto; width: 40vw">Nhập học sinh mới</h1>
+    {% if msg %}
+    <div class="alert alert-danger">
+        {{ msg }}
+    </div>
+    {% endif %}
+    <form method="POST" action="/out-student"
+          style="margin:50px auto; width: 40vw; padding-bottom: 10px">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Họ tên</span>
+            </div>
+            <input type="text" name="hoten" class="form-control" placeholder="Họ" required>
+            <input type="text" name="ten" class="form-control" placeholder="Tên" required>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Ngày sinh</span>
+            </div>
+            <input type="date" name="ngaysinh" class="form-control" required>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Giới tính</span>
+            </div>
+            <select id="sex" name="gioitinh" class="form-control">
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Địa chỉ</span>
+            </div>
+            <input type="text" name="diachi" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Số điện thoại</span>
+            </div>
+            <input type="text" name="sdt" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Email</span>
+            </div>
+            <input type="email" name="email" class="form-control">
+        </div>
+        <div class="flex justify-content-end">
+            <input type="submit" class="btn btn-success ml-auto" value="Thêm">
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

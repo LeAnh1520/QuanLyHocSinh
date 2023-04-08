@@ -7,18 +7,15 @@ from enum import Enum as UserEnum
 
 #Thiết kế bảng trong mySQL
 class UserRole(UserEnum):
-    __tablename__ = 'user_role'
     QTV = 0
     NV = 1
     GV = 2
 
 class BaseModel(db.Model):
     __abstract__ = True
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer,primary_key=True, autoincrement=True)
 
 class User(BaseModel, UserMixin):
-    __tablename__ = 'name'
-
     name = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
     password = Column(String(50), nullable=False)
@@ -49,12 +46,12 @@ class Lop(BaseModel):
     ten = Column(String(10), nullable=False)
     siso = Column(Integer, default=0)
     hocsinh = relationship('HocSinh', backref='lop', lazy=False)
-    # hocsinh = relationship('HocSinh', backref='lop', lazy=False)
+
     # teachers = relationship('Teacher', secondary='course', lazy='subquery',
     #                         backref=backref('classroom', lazy=True))
 
     def __str__(self):
-        return self.lop + self.ten
+        return self.grade + self.name
 
 class HocSinh(BaseModel):
     __table_args__ = (
@@ -71,13 +68,12 @@ class HocSinh(BaseModel):
     email = Column(String(50))
     ngaybatdau = Column(Date, default=datetime.now())
     lop_id = Column(Integer, ForeignKey(Lop.id))
-    # lop = relationship('Lop', backref=backref('hocsinh', lazy=True))
     # lop = relationship('Lop', backref='hocsinh', lazy=False)
 
 class GiaoVien(HoSo):
     user_id = Column(Integer, ForeignKey(User.id), unique=True)
-    #classes = relationship('ClassRoom', secondary='course', lazy='subquery',
-                           #backref=backref('teacher', lazy=True))
+    # classes = relationship('Lop', secondary='khoahoc', lazy='subquery',
+    #                        backref=backref('teacher', lazy=True))
 
 class QuanTriVien(HoSo):
     user_id = Column(Integer, ForeignKey(User.id), unique=True)
@@ -93,6 +89,15 @@ class MonHoc(BaseModel):
 
 class HocKy(BaseModel):
     hocky = Column(String(20), nullable=False)
+
+class KhoaHoc(BaseModel):
+    giaovien_id = Column(Integer, ForeignKey(GiaoVien.id), nullable=False)
+    giaovien = relationship(GiaoVien, backref="khoahoc", lazy=True)
+    lop_id = Column(Integer, ForeignKey(Lop.id), nullable=False)
+    lop = relationship(Lop, backref="khoahoc", lazy=True)
+    monhoc_id = Column(Integer, ForeignKey(MonHoc.id), nullable=False)
+    monhoc = relationship(MonHoc, backref="khoahoc", lazy=True)
+    year = Column(Integer, default=datetime.now().year)
 
 class Diem15(BaseModel):
 
@@ -112,8 +117,8 @@ class Diem45(BaseModel):
 class Diem(db.Model):
     monhoc_id = Column(Integer, ForeignKey(MonHoc.id), primary_key=True, nullable=False)
     hocsinh_id = Column(Integer, ForeignKey(HocSinh.id), primary_key=True, nullable=False)
-    hocky_id = Column(Integer,ForeignKey(HocKy.id), primary_key=True)
-    year = Column(Integer, primary_key=True)
+    hocky = Column(Integer, ForeignKey(HocKy.id), primary_key=True)
+    nam = Column(Integer, primary_key=True)
     diem15_id = Column(Integer, ForeignKey(Diem15.id), unique=True)
     diem45_id = Column(Integer, ForeignKey(Diem45.id), unique=True)
     DiemThi = Column(Float)

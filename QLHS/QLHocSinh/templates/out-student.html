@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} Xuất học sinh {% endblock %}
+
+{% block content %}
+<table class="table" align="center">
+
+    <tr align="center">
+        <th colspan="2"> HỒ SƠ HỌC SINH</th>
+    </tr>
+    <tr>
+        <td>Họ tên: {{ info_student.hoten }} {{ info_student.ten }}</td>
+    </tr>
+    <tr>
+        <td>Giới tính: {{ info_student.gioitinh }}</td>
+    </tr>
+    <tr>
+        <td>Ngày sinh: {{ info_student.ngaysinh }}</td>
+    </tr>
+    <tr>
+        <td>Địa chỉ: {{ info_student.diachi }}</td>
+    </tr>
+    <tr>
+        <td>Số điện thoại: {{ info_student.sdt }}</td>
+    </tr>
+    <tr>
+        <td>Email: {{ info_student.email }}</td>
+    </tr>
+</table>
+
+{% endblock %}
