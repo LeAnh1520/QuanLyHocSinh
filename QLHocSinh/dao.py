@@ -1,5 +1,7 @@
-from QLHocSinh.models import Lop, HocSinh, User, MonHoc, Diem, Diem15, Diem45
+from QLHocSinh.models import Lop, HocSinh, User, MonHoc, Diem, Diem15, Diem45, GiaoVien, KhoaHoc
 from QLHocSinh import db, app
+from datetime import datetime
+
 from flask_login import current_user
 from sqlalchemy import func
 import hashlib
@@ -26,93 +28,102 @@ def check_login(username, password):
         return User.query.filter(User.username.__eq__(username.strip()),
                                  User.password.__eq__(password)).first()
 
+def add_student(first_name, last_name, sex, bday, address, phone, email):
+    if sex == 'male':
+        sex = True
+    else:
+        sex = False
+    # if config.min_age <= (datetime.now() - parser.parse(bday)).days / 365 <= config.max_age:
+
+    student = HocSinh(ten=first_name,
+                    hoten=last_name,
+                    gioitinh=sex,
+                    ngaysinh=bday,
+                    diachi=address,
+                    sdt=phone,
+                    email=email)
+
+    db.session.add(student)
+    db.session.commit()
+    # else:
+    #     return "Tuổi không hợp lệ"
 
 def get_classes():
     return db.session.query(Lop).all()
 
-# Cho: lay bang diem cua cac hoc sinh trong 1 lop theo hoc ky, nam, mon
-# def get_students_mark(class_id=None, semester=None, year=None, subject_id=None):
-#     marks = db.session.query(MonHoc, HocSinh, Diem.semester, Diem.year, Diem15, Diem45, Diem.DiemThi, Diem.DiemTBHK1)\
-#                                 .join(Diem, Diem.monhoc_id.__eq__(MonHoc.id))\
-#                                 .join(HocSinh, HocSinh.id.__eq__(Diem.hocsinh_id))\
-#                                 .join(Diem15, Diem15.id.__eq__(Diem.diem15_id), isouter=True)\
-#                                 .join(Diem45, Diem45.id.__eq__(Diem.diem45_id), isouter=True)
-#
-#     if class_id:
-#         marks = marks.filter(HocSinh.lop_id.__eq__(class_id))
-#     if semester:
-#         marks = marks.filter(Diem.hocky_id.__eq__(semester))
-#     if year:
-#         marks = marks.filter(Diem.year.__eq__(year))
-#     if subject_id:
-#         marks = marks.filter(Diem.monhoc_id.__eq__(subject_id))
-#
-#     return marks
-#
-# # Cho: tinh trung binh bo qua None.
-# def average_ignore_none(numbers):
-#     total = []
-#     for n in numbers:
-#         if n:
-#             total.append(n)
-#     if len(total) == 0:
-#         return 0
-#     avg = sum(total) / len(total)
-#     return avg
-#
-# def cal_avg_mark(subject_id, semester, year):
-#     marks = get_students_mark(subject_id=subject_id, semester=semester, year=year)
-#
-#     for s in marks:
-#         if s.Diem15:
-#             mark15 = average_ignore_none([s.Diem15.col1, s.Diem15.col2, s.Diem15.col3, s.Diem15.col4, s.Diem15.col5])
-#         else:
-#             mark15 = 0
-#         if s.Diem45:
-#             mark45 = average_ignore_none([s.Diem45.col1, s.Diem45.col2, s.Diem45.col3])
-#         else:
-#             mark45 = 0
-#         if s.DiemThi:
-#             avg = (mark15 + mark45 * 2 + s.DiemThi * 3) / 6
-#         else:
-#             avg = (mark15 + mark45 * 2) / 6
-#         db.session.query(Diem).filter(Diem.monhoc_id.__eq__(subject_id),
-#                                                Diem.hocsinh_id.__eq__(s.Student.id),
-#                                                Diem.hocky_id.__eq__(semester),
-#                                                Diem.year.__eq__(year)).update({Diem.avg: avg},
-#                                                                               synchronize_session=False)
-#     db.session.commit()
-#
-# def total_qualified_by_class(class_id, semester, year, subject_id):
-#     cal_avg_mark(subject_id=subject_id, semester=semester, year=year)
-#     count = db.session.query(func.count(Diem.avg)).\
-#         join(HocSinh, HocSinh.id.__eq__(Diem.student_id)).\
-#         join(Lop, Lop.id.__eq__(HocSinh.class_id)).\
-#         filter(Lop.id.__eq__(class_id),
-#                Diem.monhoc_id.__eq__(subject_id),
-#                Diem.hocky_id.__eq__(semester),
-#                Diem.year.__eq__(year),
-#                Diem.DiemTBHK1.__ge__(5)).first()
-#     return count[0]
-#
-# def get_stats(semester=None, year=None, subject_name=None):
-#     classes = get_classes()
-#     stats = []
-#     subject_id = db.session.query(MonHoc.id).filter(MonHoc.ten.__eq__(subject_name)).first()
-#
-#     for c in classes:
-#         total_qualified = total_qualified_by_class(c.id, semester=semester,
-#                                                    year=year, subject_id=(subject_id[0] if subject_id else 0))
-#         total = c.total if c.total else 0
-#         stats.append({
-#             'class_id': c.id,
-#             'class_name': c.lop + c.ten,
-#             'total': total,
-#             'total_qualified': total_qualified,
-#             'ratio': "{0:.2f}".format((float(total_qualified) / total * 100) if total != 0 else 0)
-#         })
-#
-#     return stats
+def get_course_info(course_id):
+    return db.session.query(Lop.khoi, Lop.ten, MonHoc.ten, KhoaHoc.year)\
+            .join(Lop, Lop.id.__eq__(KhoaHoc.lop_id))\
+            .join(MonHoc, MonHoc.id.__eq__(KhoaHoc.monhoc_id)).filter(KhoaHoc.id.__eq__(course_id)).first()
 
 
+def get_teacher_id(user_id):
+    return db.session.query(GiaoVien.id).filter(GiaoVien.user_id.__eq__(user_id))
+
+def get_classes_of_teacher(user_id):
+    teacher_id = get_teacher_id(user_id=user_id)
+
+    return db.session.query(MonHoc.ten, Lop.khoi + Lop.ten, KhoaHoc.id)\
+             .join(KhoaHoc, KhoaHoc.monhoc_id.__eq__(MonHoc.id))\
+             .join(Lop, Lop.id.__eq__(KhoaHoc.lop_id))\
+             .filter(KhoaHoc.giaovien_id.__eq__(teacher_id)).all()
+
+def check_teacher_access(user_id, course_id=None, student_id=None, subject_id=None):
+    teacher_id = get_teacher_id(user_id=user_id).first()[0]
+
+    if course_id:
+        course = KhoaHoc.query.get(course_id)
+        print("teacher_id")
+        print(course.teacher_id)
+        if teacher_id == course.teacher_id:
+            return True
+
+    if student_id and subject_id:
+        class_id = HocSinh.query.get(student_id).lop_id
+        course = db.session.query(KhoaHoc)\
+                   .join(HocSinh, HocSinh.lop_id.__eq__(KhoaHoc.lop_id))\
+                   .filter(KhoaHoc.giaovien_id.__eq__(teacher_id),
+                           KhoaHoc.monhoc_id.__eq__(subject_id),
+                           KhoaHoc.lop_id.__eq__(class_id)).first()
+        if teacher_id == course.teacher_id:
+            return True
+
+    return False
+
+def create_all_mark_records(course_id=None):
+    course = KhoaHoc.query.get(course_id)
+    students_already_have = db.session.query(Diem.hocsinh_id).filter(Diem.monhoc_id.__eq__(course.subject_id),
+                                                                     Diem.year.__eq__(course.year)).distinct()
+    students_have_no_record = db.session.query(HocSinh.id)\
+                                .filter(HocSinh.lop_id.__eq__(course.class_id),
+                                        HocSinh.id.not_in(students_already_have))
+
+    for s in students_have_no_record:
+        diem15_1 = Diem15()
+        diem15_2 = Diem15()
+        diem45_1 = Diem45()
+        diem45_2 = Diem45()
+
+        db.session.add(diem15_1)
+        db.session.add(diem15_2)
+        db.session.add(diem45_1)
+        db.session.add(diem45_2)
+
+        mark1 = Diem(monhoc_id=KhoaHoc.monhoc_id,
+                     hocsinh_id=s[0],
+                     hocki=1,
+                     year=course.year,
+                     mark15=mark15_1,
+                     mark45=mark45_1)
+        db.session.add(mark1)
+
+        mark2 = Mark(subject_id=course.subject_id,
+                     student_id=s[0],
+                     semester=2,
+                     year=course.year,
+                     mark15=mark15_2,
+                     mark45=mark45_2)
+        db.session.add(mark2)
+
+    db.session.commit()
 
