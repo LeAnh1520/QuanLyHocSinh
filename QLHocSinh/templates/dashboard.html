@@ -1,0 +1,149 @@
+{% extends "layout/base-dashboard.html" %}
+
+{% block content %}
+    <!--    welcome     -->
+    <div class="welcome">
+        <div class="container welcome__container">
+            <div class="welcome__content">
+                <h1 class="welcome__title welcome__title--subtitle">Chào mừng đến với</h1>
+                <h1 class="welcome__title">Trung học Phổ thông OU</h1>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+            </div>
+            <div class="welcome__banner">
+                <img src="{{ url_for('static', filename='images/ou-university.png') }}" alt="university">
+            </div>
+        </div>
+    </div>
+
+    <!--    overview    -->
+    <div class="overview">
+        <div class="container overview__container">
+            <div class="overview__feature overview__feature__title">
+                <h2>Giới thiệu</h2>
+                <p>Điểm nổi bật tại THPT OU</p>
+            </div>
+            <div class="overview__feature">
+                <div class="overview__feature__image">
+                    <img src="{{ url_for('static', filename='images/educator-community.png') }}" alt="overview">
+                </div>
+                <div class="overview__feature__content">
+                    <h3>Educator’s community</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+             <div class="overview__feature">
+                <div class="overview__feature__image">
+                    <img src="{{ url_for('static', filename='images/learning-environment.png') }}" alt="overview">
+                </div>
+                <div class="overview__feature__content">
+                    <h3>Educator’s community</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+            <div class="overview__feature">
+                <div class="overview__feature__image">
+                    <img src="{{ url_for('static', filename='images/entrepreneur-education.png') }}" alt="overview">
+                </div>
+                <div class="overview__feature__content">
+                    <h3>Educator’s community</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    news    -->
+    <div class="news">
+        <div class="container news__container">
+            <h2 class="news__title">Tin tức và sự kiện</h2>
+            <div class="news__list">
+                <div class="news__card">
+                    <div class="news__card__image">
+                        <img src="{{ url_for('static', filename='images/news-1.png') }}" alt="news">
+                    </div>
+                    <p class="news__card__date">May 07, 2022</p>
+                    <p class="news__card__title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
+                    <div class="news__card__brand">
+                        <div>
+                            <img src="{{ url_for('static', filename='images/news-brand.png') }}" alt="news">
+                        </div>
+                        <p>thanhnien Newspaper</p>
+                    </div>
+                    <p class="news__card__content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="news__card__action">
+                        <div class="news__card__action__item">
+                            <p>Read more</p>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/arrow-right.png') }}" alt="Read more">
+                            </div>
+                        </div>
+                        <div class="news__card__action__item">
+                            <p>Share</p>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/share.png') }}" alt="Share">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news__card">
+                    <div class="news__card__image">
+                        <img src="{{ url_for('static', filename='images/news-2.png') }}" alt="news">
+                    </div>
+                    <p class="news__card__date">May 07, 2022</p>
+                    <p class="news__card__title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
+                    <div class="news__card__brand">
+                        <div>
+                            <img src="{{ url_for('static', filename='images/news-brand.png') }}" alt="news">
+                        </div>
+                        <p>thanhnien Newspaper</p>
+                    </div>
+                    <p class="news__card__content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="news__card__action">
+                        <div class="news__card__action__item">
+                            <p>Read more</p>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/arrow-right.png') }}" alt="Read more">
+                            </div>
+                        </div>
+                        <div class="news__card__action__item">
+                            <p>Share</p>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/share.png') }}" alt="Share">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news__card">
+                    <div class="news__card__image">
+                        <img src="{{ url_for('static', filename='images/news-3.png') }}" alt="news">
+                    </div>
+                    <p class="news__card__date">May 07, 2022</p>
+                    <p class="news__card__title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
+                    <div class="news__card__brand">
+                        <div>
+                            <img src="{{ url_for('static', filename='images/news-brand.png') }}" alt="news">
+                        </div>
+                        <p>thanhnien Newspaper</p>
+                    </div>
+                    <p class="news__card__content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div class="news__card__action">
+                        <div class="news__card__action__item">
+                            <p>Read more</p>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/arrow-right.png') }}" alt="Read more">
+                            </div>
+                        </div>
+                        <div class="news__card__action__item">
+                            <p>Share</p>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/share.png') }}" alt="Share">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
