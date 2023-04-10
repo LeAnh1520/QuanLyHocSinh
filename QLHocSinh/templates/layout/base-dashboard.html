@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/component.css') }}">
 </head>
 <body>
     <!--    background  -->
@@ -35,18 +35,24 @@
                         <a class="nav-link" href="/">Trang chủ</a>
                     </li>
                     {% if current_user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/add-students">Tiếp nhận học sinh</a>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tiếp nhận học sinh
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-light">
+                            <li><a class="dropdown-item" href="{{ url_for('list_students') }}">Danh sách học sinh</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('add_students') }}">Nhập học sinh mới</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/setup-class">Lập danh sách lớp</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/arrange-class">Điều chỉnh lớp học</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/students-marks">Quản lý điểm</a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/setup-class">Lập danh sách lớp</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/arrange-class">Điều chỉnh lớp học</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#">Quản lý điểm</a>-->
+<!--                    </li>-->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}">
                             {% if current_user.avatar %}
@@ -58,11 +64,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('my_logout') }}">Đăng xuất</a>
+                        <a class="nav-link button-log" href="{{ url_for('my_logout') }}">Đăng xuất</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                            <a class="nav-link" href="/login">Đăng nhập</a>
+                        <a class="nav-link button-log" href="/login">Đăng nhập</a>
                     </li>
                     {% endif %}
                 </ul>

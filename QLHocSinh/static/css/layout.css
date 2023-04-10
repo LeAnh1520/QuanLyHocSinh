@@ -24,8 +24,42 @@ section {
     padding: 0px 40px;
 }
 
+.header .navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.header .navbar-nav li {
+    margin: 0 2px;
+}
+
+.header .navbar-nav > li > a {
+    color: #fff !important;
+}
+
+.header .nav-item.dropdown button {
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.header .nav-item.dropdown .dropdown-menu li {
+    color: #182d57 !important;
+}
+
+.header .nav-item.dropdown button:focus {
+    box-shadow: none;
+}
+
+.header .nav-item .button-log {
+    border-radius: 12px;
+    background: linear-gradient(180deg, #FEBC11 0%, #FFB800 100%) !important;
+    font-weight: 500;
+    padding: 3px 10px;
+}
+
 .content {
-    /* min-height: calc(100vh + 250px); */
+    min-height: 90vh;
     height: 100%;
 }
 

@@ -1,62 +1,62 @@
 {% extends "layout/base-dashboard.html" %}
 
-{% block title %} Thêm học sinh {% endblock %}
+{% block title %} Cập nhật học sinh {% endblock %}
 
 {% block content %}
 <div class="container form-login form">
-    <h1 class="text-center heading">Nhập học sinh mới</h1>
+    <h1 class="text-center heading">Cập nhật học sinh</h1>
     {% if msg %}
     <div class="alert alert-danger">
         {{ msg }}
     </div>
     {% endif %}
-    <form method="POST" action="{{ url_for('out_student') }}"
+    <form method="POST" action="{{ url_for('edit_student', student_id=student[0].id) }}"
           style="margin:50px auto; width: 40vw; padding-bottom: 10px">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Họ tên</span>
             </div>
-            <input type="text" name="hoten" class="form-control" placeholder="Họ" required>
-            <input type="text" name="ten" class="form-control" placeholder="Tên" required>
+            <input type="text" name="hoten" class="form-control" placeholder="Họ" required value="{{ student[0].hoten }}">
+            <input type="text" name="ten" class="form-control" placeholder="Tên" required value="{{ student[0].ten }}">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Ngày sinh</span>
             </div>
-            <input type="date" name="ngaysinh" class="form-control" required>
+            <input type="date" name="ngaysinh" class="form-control" required value="{{ student[0].ngaysinh }}">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Giới tính</span>
             </div>
             <select id="sex" name="gioitinh" class="form-control">
-                <option value="male">Nam</option>
-                <option value="femail">Nữ</option>
+                <option value=1>Nam</option>
+                <option value=0>Nữ</option>
             </select>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Địa chỉ</span>
             </div>
-            <input type="text" name="diachi" class="form-control">
+            <input type="text" name="diachi" class="form-control" value="{{ student[0].diachi }}">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Số điện thoại</span>
             </div>
-            <input type="text" name="sdt" class="form-control">
+            <input type="text" name="sdt" class="form-control" value="{{ student[0].sdt }}">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Email</span>
             </div>
-            <input type="email" name="email" class="form-control">
+            <input type="email" name="email" class="form-control" value="{{ student[0].email }}">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Lớp</span>
             </div>
-            <select class="form-select" aria-label="Chọn lớp" name="lop">
+            <select class="form-select" aria-label="Chọn lớp" name="lop" value="{{ student[0].lop.ten }}" required>
                 <option>-- Chọn lớp --</option>
 
                 {% for class in classes %}
@@ -70,7 +70,7 @@
             <button type="submit" class="btn btn-primary">
                 <a class="" href="/">Quay lại</a>
             </button>
-            <button type="submit" class="btn btn-success">Thêm</button>
+            <button type="submit" class="btn btn-success">Cập nhật</button>
         </div>
     </form>
 </div>

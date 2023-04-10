@@ -1,31 +1,32 @@
-{% extends "base.html" %}
+{% extends "layout/base-dashboard.html" %}
 
 {% block title %} Xuất học sinh {% endblock %}
 
 {% block content %}
-<table class="table" align="center">
-
-    <tr align="center">
-        <th colspan="2"> HỒ SƠ HỌC SINH</th>
-    </tr>
-    <tr>
-        <td>Họ tên: {{ info_student.hoten }} {{ info_student.ten }}</td>
-    </tr>
-    <tr>
-        <td>Giới tính: {{ info_student.gioitinh }}</td>
-    </tr>
-    <tr>
-        <td>Ngày sinh: {{ info_student.ngaysinh }}</td>
-    </tr>
-    <tr>
-        <td>Địa chỉ: {{ info_student.diachi }}</td>
-    </tr>
-    <tr>
-        <td>Số điện thoại: {{ info_student.sdt }}</td>
-    </tr>
-    <tr>
-        <td>Email: {{ info_student.email }}</td>
-    </tr>
-</table>
-
+<div class="container form-login form">
+    <h1 class="text-center heading">Hồ sơ học sinh</h1>
+    <table class="table" align="center">
+        <tr>
+            <td>Họ tên: {{ info_student.hoten }} {{ info_student.ten }}</td>
+        </tr>
+        <tr>
+            <td>Giới tính: {{ info_student.gioitinh }}</td>
+        </tr>
+        <tr>
+            <td>Ngày sinh: {{ info_student.ngaysinh }}</td>
+        </tr>
+        <tr>
+            <td>Địa chỉ: {{ info_student.diachi }}</td>
+        </tr>
+        <tr>
+            <td>Số điện thoại: {{ info_student.sdt }}</td>
+        </tr>
+        <tr>
+            <td>Email: {{ info_student.email }}</td>
+        </tr>
+        <tr>
+            <td>Mã lớp học: {{ info_student.lop_id }}</td>
+        </tr>
+    </table>
+</div>
 {% endblock %}

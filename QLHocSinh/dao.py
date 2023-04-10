@@ -28,7 +28,7 @@ def check_login(username, password):
         return User.query.filter(User.username.__eq__(username.strip()),
                                  User.password.__eq__(password)).first()
 
-def add_student(first_name, last_name, sex, bday, address, phone, email):
+def add_student(first_name, last_name, sex, bday, address, phone, email, lop):
     if sex == 'male':
         sex = True
     else:
@@ -41,7 +41,8 @@ def add_student(first_name, last_name, sex, bday, address, phone, email):
                     ngaysinh=bday,
                     diachi=address,
                     sdt=phone,
-                    email=email)
+                    email=email,
+                    lop_id=lop)
 
     db.session.add(student)
     db.session.commit()
@@ -50,6 +51,26 @@ def add_student(first_name, last_name, sex, bday, address, phone, email):
 
 def get_classes():
     return db.session.query(Lop).all()
+
+def get_student(student_id):
+    # return db.session.query(HocSinh)\
+    #         .join(Lop, Lop.id.__eq__(HocSinh.lop_id), isouter=True).all()
+    # return User.query.filter(User.username.__eq__(username.strip()),
+    #                              User.password.__eq__(password)).first()
+    return db.session.query(HocSinh)\
+            .filter(HocSinh.id.__eq__(student_id)) \
+            .join(Lop, Lop.id.__eq__(HocSinh.lop_id), isouter=True).all()
+
+def get_students():
+    return db.session.query(HocSinh)\
+            .join(Lop, Lop.id.__eq__(HocSinh.lop_id), isouter=True).all()
+
+def edit_student(id, first_name, last_name, sex, bday, address, phone, email, lop):
+    if id:
+        db.session.query(HocSinh).filter(HocSinh.id.__eq__(id))\
+            .update({HocSinh.ten: first_name, HocSinh.hoten: last_name, HocSinh.ngaysinh: bday, HocSinh.gioitinh: bool(sex), HocSinh.diachi: address, HocSinh.sdt: phone, HocSinh.email: email, HocSinh.lop_id: lop},
+                    synchronize_session=False)
+    db.session.commit()
 
 def get_course_info(course_id):
     return db.session.query(Lop.khoi, Lop.ten, MonHoc.ten, KhoaHoc.year)\
@@ -126,4 +147,15 @@ def create_all_mark_records(course_id=None):
         db.session.add(mark2)
 
     db.session.commit()
+
+def get_classes_of_student(user_id):
+    student_id = db.session.query(HocSinh.id).filter(HocSinh.id.__eq__(user_id))
+
+    classes = db.session.query(MonHoc.ten, Lop.khoi + Lop.ten, KhoaHoc.id) \
+        .join(KhoaHoc, KhoaHoc.monhoc_id.__eq__(MonHoc.id)) \
+        .join(Lop, Lop.id.__eq__(KhoaHoc.lop_id)) \
+        .join(HocSinh, HocSinh.lop_id.__eq__(Lop.id)) \
+        .filter(HocSinh.id.__eq__(student_id)).all()
+
+    return classes
 
