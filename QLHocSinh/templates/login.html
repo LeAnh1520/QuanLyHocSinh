@@ -3,15 +3,15 @@
 {% block title %}Đăng nhập{% endblock %}
 
 {% block content %}
-<div class="form-login login" style="margin:50px auto; width:500px; min-height:450px;">
-    <h1 class="text-center heading" style="margin-top:30px;margin-bottom:30px">ĐĂNG NHẬP</h1>
+<div class="form-login form">
+    <h1 class="text-center heading">Đăng nhập</h1>
     {% if error_msg %}
     <div class="alert alert-danger">
         <h5>{{ error_msg }}</h5>
     </div>
     {% endif %}
     <!--  them attribute enctype="multipart/form-data" neu them image-->
-    <form method="post" action="{{ url_for('add-students') }}">
+    <form method="post" action="{{ url_for('user_login') }}">
         <div class="form-group mb-3 mt-3">
             <label for="username" class="form-label">Tên đăng nhập:</label>
             <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username">
@@ -20,7 +20,7 @@
             <label for="pwd" class="form-label">Mật khẩu:</label>
             <input type="password" class="form-control" id="pwd" placeholder="Mật khẩu" name="password">
         </div>
-        <div class="login__action">
+        <div class="form__action">
             <button type="submit" class="btn btn-primary">
                 <a class="" href="/">Quay lại</a>
             </button>
